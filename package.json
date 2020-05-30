@@ -1,0 +1,55 @@
+{
+  "name": "desktop-timer",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "format": "npx prettier --write src/**/*.{ts,tsx}",
+    "lint": "npx eslint src/**/*.{ts,tsx}",
+    "lint:fix": "npx eslint --fix src/**/*.{ts,tsx}",
+    "dev": "npx webpack --watch --config webpack/webpack.config.js --mode=development",
+    "build": "npx webpack --config webpack/webpack.config.js --mode=production",
+    "test": "npx jest",
+    "serve": "npx electron dist/main.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/surumebeer/desktop-timer.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/surumebeer/desktop-timer/issues"
+  },
+  "homepage": "https://github.com/surumebeer/desktop-timer#readme",
+  "dependencies": {
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-redux": "^7.2.0",
+    "redux": "^4.0.5"
+  },
+  "devDependencies": {
+    "@types/jest": "^25.2.3",
+    "@types/react": "^16.9.35",
+    "@types/react-dom": "^16.9.8",
+    "@types/react-redux": "^7.1.9",
+    "@types/redux": "^3.6.0",
+    "@typescript-eslint/eslint-plugin": "^3.0.2",
+    "@typescript-eslint/parser": "^3.0.2",
+    "electron": "^9.0.0",
+    "eslint": "^7.1.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-loader": "^4.0.2",
+    "eslint-plugin-prettier": "^3.1.3",
+    "eslint-plugin-react": "^7.20.0",
+    "eslint-plugin-react-hooks": "^4.0.4",
+    "html-webpack-plugin": "^4.3.0",
+    "jest": "^26.0.1",
+    "prettier": "^2.0.5",
+    "ts-loader": "^7.0.5",
+    "typescript": "^3.9.3",
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.11"
+  }
+}
