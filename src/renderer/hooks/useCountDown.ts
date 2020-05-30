@@ -6,33 +6,46 @@ type TimeType = {
   sec: number;
 };
 
+type FlgType = 'isWaiting' | 'isStarting' | 'isStopping';
+
 export function useCountDown(
   time: TimeType
-): [TimeType, () => void, () => void, () => void] {
+): [TimeType, number, FlgType, () => void, () => void, () => void] {
   const [initialTime, setInitialTime] = React.useState<TimeType>(time);
   const [currentTime, setCurrentTime] = React.useState<TimeType>(time);
+  const [percent, setPercent] = React.useState(100);
   const [intervalId, setIntervalId] = React.useState(0);
+  const [countDownFlg, setCountDownFlg] = React.useState<FlgType>('isWaiting');
 
+  const refInitialTime = React.useRef(0);
   const refCountTime = React.useRef(0);
 
   React.useEffect(() => {
     setInitialTime(time);
     setCurrentTime(time);
+    refInitialTime.current = calcTime(time);
   }, [time]);
 
   const resetDisplayTime = () => {
     setCurrentTime(initialTime);
   };
 
-  const calcStartTime = () => {
-    const hour = Number(currentTime.hour) * 60 * 60;
-    const min = Number(currentTime.min) * 60;
-    const sec = Number(currentTime.sec);
+  const calcTime = (calcTime: TimeType) => {
+    const hour = Number(calcTime.hour) * 60 * 60;
+    const min = Number(calcTime.min) * 60;
+    const sec = Number(calcTime.sec);
     return hour + min + sec;
+  };
+
+  const calcPercent = () => {
+    setPercent(
+      Math.floor((refCountTime.current / calcTime(initialTime)) * 100)
+    );
   };
 
   const updateTime = () => {
     refCountTime.current = refCountTime.current - 1;
+    calcPercent();
     setCurrentTime({
       hour: Math.floor(refCountTime.current / 60 / 60),
       min: Math.floor((refCountTime.current / 60) % 60),
@@ -40,22 +53,32 @@ export function useCountDown(
     });
   };
 
-  const countDownStart = () => {
-    refCountTime.current = calcStartTime();
+  const startCountDown = () => {
+    refCountTime.current = calcTime(currentTime);
     const id = window.setInterval(() => {
       updateTime();
     }, 1000);
     setIntervalId(id);
+    setCountDownFlg('isStarting');
   };
 
-  const countDownStop = () => {
+  const stopCountDown = () => {
     clearInterval(intervalId);
+    setCountDownFlg('isStopping');
   };
 
-  const countDownReset = () => {
+  const resetCountDown = () => {
     clearInterval(intervalId);
     resetDisplayTime();
+    setCountDownFlg('isWaiting');
   };
 
-  return [currentTime, countDownStart, countDownStop, countDownReset];
+  return [
+    currentTime,
+    percent,
+    countDownFlg,
+    startCountDown,
+    stopCountDown,
+    resetCountDown,
+  ];
 }
