@@ -1,42 +1,48 @@
 import * as React from 'react';
+import { useTimerDispatch, TimerActionType } from './../../reducers';
+import { TimeType } from './../../entity'; // eslint-disable-line no-unused-vars
+import { zeroPad } from './../../util';
 
-import { TimeType } from './types'; // eslint-disable-line no-unused-vars
+type Props = {
+  times: TimeType[];
+  selectIndex: number;
+};
 
-const initialTimeList: TimeType[] = [
-  {
-    hour: 0,
-    min: 0,
-    sec: 0,
-  },
-];
+export const TimeList = (props: Props) => {
+  const dispatch = useTimerDispatch();
 
-export const TimeList = () => {
-  const [timeList, setTimeList] = React.useState<TimeType[]>(initialTimeList); // eslint-disable-line
-
-  const zeroPad = (num: number) => {
-    return num.toString().padStart(2, '0');
-  };
-
-  const handleStart = (x: TimeType) => {
-    console.log(x);
+  const handleSelect = (index: number) => {
+    dispatch({
+      type: TimerActionType.Select,
+      payload: {
+        index: index,
+      },
+    });
   };
 
   const handleDelete = (index: number) => {
-    const newList = timeList.filter((x, i) => i !== index);
-    setTimeList(newList);
+    dispatch({
+      type: TimerActionType.Delete,
+      payload: {
+        index: index,
+      },
+    });
   };
 
   return (
     <ul>
-      {timeList.length === null ? (
+      {props.times.length === null ? (
         <></>
       ) : (
-        timeList.map((x, i) => (
-          <li key={i}>
+        props.times.map((x, i) => (
+          <li
+            key={i}
+            onClick={() => handleSelect(i)}
+            className={props.selectIndex === i ? 'selected' : ''}
+          >
             <p>
               {zeroPad(x.hour)}: {zeroPad(x.min)}: {zeroPad(x.sec)}
             </p>
-            <button onClick={() => handleStart(x)}>start</button>
             <button onClick={() => handleDelete(i)}>delete</button>
           </li>
         ))

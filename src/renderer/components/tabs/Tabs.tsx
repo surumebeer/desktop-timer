@@ -2,15 +2,23 @@ import * as React from 'react';
 
 import { Tab } from './Tab';
 
-import { TabsType } from './types'; // eslint-disable-line no-unused-vars
+import { TabType } from './../../entity';
 
-const tabs: TabsType[] = ['timer', 'interval', 'config'];
+import { useTabState, useTabDispatch } from './../../reducers';
+
+const tabs: TabType[] = ['timer', 'interval', 'config'];
 
 export const Tabs = () => {
-  const [selectTab, setSelectTabsType] = React.useState<TabsType>(tabs[0]);
+  const state = useTabState();
+  const dispatch = useTabDispatch();
 
-  const onTab = (tab: TabsType) => {
-    setSelectTabsType(tab);
+  const onTab = (tab: TabType) => {
+    dispatch({
+      type: 'setTab',
+      payload: {
+        tab: tab,
+      },
+    });
   };
 
   return (
@@ -20,7 +28,7 @@ export const Tabs = () => {
           tab={x}
           key={i}
           onTab={(tab) => onTab(tab)}
-          selected={selectTab === x ? true : false}
+          selected={state.tab === x ? true : false}
         />
       ))}
     </React.Fragment>

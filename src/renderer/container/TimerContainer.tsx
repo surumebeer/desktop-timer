@@ -2,12 +2,17 @@ import * as React from 'react';
 
 import { TimeDisplay, InputTime, TimeList } from '../components/timer';
 
+import { useTimerState } from './../reducers/timer';
+
 export const TimerContainer = () => {
+  const state = useTimerState();
+  //const dispatch = () => useTimerDispatch;
+
   return (
     <div>
-      <TimeDisplay />
+      <TimeDisplay selectTime={state.times[state.selectIndex]} />
       <InputTime />
-      <TimeList />
+      <TimeList times={state.times} selectIndex={state.selectIndex} />
     </div>
   );
 };

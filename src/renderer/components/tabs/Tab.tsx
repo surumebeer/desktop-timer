@@ -1,10 +1,10 @@
 import * as React from 'react';
 
-import { TabsType } from './types'; // eslint-disable-line no-unused-vars
+import { TabType } from './../../entity'; // eslint-disable-line no-unused-vars
 
 interface IProps {
-  tab: TabsType;
-  onTab: (tab: TabsType) => void;
+  tab: TabType;
+  onTab: (tab: TabType) => void;
   selected: boolean;
 }
 

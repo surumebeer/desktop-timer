@@ -2,19 +2,17 @@ import * as React from 'react';
 
 import { useCountDown } from './../../hooks';
 
-const initialTime = {
-  hour: 1,
-  min: 0,
-  sec: 10,
+import { TimeType } from './../../entity';
+
+import { zeroPad } from './../../util';
+
+type Props = {
+  selectTime: TimeType;
 };
 
-export const TimeDisplay = () => {
-  const zeroPad = (num: number) => {
-    return num.toString().padStart(2, '0');
-  };
-
+export const TimeDisplay = (props: Props) => {
   const [currentTime, percent, flg, start, stop, reset] = useCountDown(
-    initialTime
+    props.selectTime
   );
 
   const handleStart = () => {
