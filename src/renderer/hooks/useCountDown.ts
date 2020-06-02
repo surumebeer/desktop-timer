@@ -24,6 +24,7 @@ export function useCountDown(
     setInitialTime(time);
     setCurrentTime(time);
     refInitialTime.current = calcTime(time);
+    console.log(time);
   }, [time]);
 
   const resetDisplayTime = () => {
@@ -53,12 +54,22 @@ export function useCountDown(
     });
   };
 
-  const startCountDown = () => {
-    refCountTime.current = calcTime(currentTime);
+  const setTimerInterval = () => {
     const id = window.setInterval(() => {
+      if (refCountTime.current < 1) {
+        resetDisplayTime();
+        setCountDownFlg('isWaiting');
+        clearInterval(id);
+        return false;
+      }
       updateTime();
     }, 1000);
     setIntervalId(id);
+  };
+
+  const startCountDown = () => {
+    refCountTime.current = calcTime(currentTime);
+    setTimerInterval();
     setCountDownFlg('isStarting');
   };
 

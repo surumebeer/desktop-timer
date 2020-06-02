@@ -18,7 +18,7 @@ export const initialState: State = {
     {
       hour: 0,
       min: 0,
-      sec: 0,
+      sec: 10,
     },
   ],
   selectIndex: 0,
