@@ -1,26 +1,15 @@
 import * as React from 'react';
 
-import { TimeType } from './../../entity'; // eslint-disable-line no-unused-vars
+import { TimeType } from './../../entity';
 import { useTimerDispatch, TimerActionType } from '../../reducers';
 
-const initialTime: TimeType = {
-  hour: 0,
-  min: 0,
-  sec: 0,
-};
+import { useEditTime, initialTime } from './../../hooks';
 
 const timeKey = Object.keys(initialTime) as Array<keyof TimeType>;
 
 export const InputTime = () => {
-  const [time, setTime] = React.useState<TimeType>(initialTime);
+  const [time, handleChange, resetTime] = useEditTime();
   const dispatch = useTimerDispatch();
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setTime({
-      ...time,
-      [e.target.name]: e.target.value,
-    });
-  };
 
   const handleAddButton = () => {
     dispatch({
@@ -29,7 +18,7 @@ export const InputTime = () => {
         time: time,
       },
     });
-    setTime(initialTime);
+    resetTime();
   };
 
   return (

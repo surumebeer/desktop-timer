@@ -49,7 +49,10 @@ const addReducer = (state: State, payload: AddAction['payload']) => {
 const deleteReducer = (state: State, payload: DeleteAction['payload']) => {
   return {
     ...state,
-    times: state.times.filter((x, i) => i !== payload.index),
+    times:
+      state.times.length > 1
+        ? state.times.filter((x, i) => i !== payload.selectIndex)
+        : initialState.times,
   };
 };
 
@@ -57,7 +60,7 @@ const updateReducer = (state: State, payload: UpdateAction['payload']) => {
   return {
     ...state,
     times: state.times.map((x, i) => {
-      return i === payload.index ? payload.time : x;
+      return i === payload.selectIndex ? payload.time : x;
     }),
   };
 };
@@ -65,6 +68,6 @@ const updateReducer = (state: State, payload: UpdateAction['payload']) => {
 const selectReducer = (state: State, payload: SelectAction['payload']) => {
   return {
     ...state,
-    selectIndex: payload.index,
+    selectIndex: payload.selectIndex,
   };
 };

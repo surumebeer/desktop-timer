@@ -9,7 +9,7 @@ export enum TimerActionType {
 
 export type Payload = {
   time: TimeType;
-  index: number;
+  selectIndex: number;
 };
 
 export type AddAction = {
@@ -19,7 +19,7 @@ export type AddAction = {
 
 export type DeleteAction = {
   type: TimerActionType.Delete;
-  payload: Pick<Payload, 'index'>;
+  payload: Pick<Payload, 'selectIndex'>;
 };
 
 export type UpdateAction = {
@@ -29,7 +29,7 @@ export type UpdateAction = {
 
 export type SelectAction = {
   type: TimerActionType.Select;
-  payload: Pick<Payload, 'index'>;
+  payload: Pick<Payload, 'selectIndex'>;
 };
 
 export type Actions = AddAction | DeleteAction | UpdateAction | SelectAction;

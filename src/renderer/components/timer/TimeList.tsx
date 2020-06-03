@@ -1,7 +1,6 @@
 import * as React from 'react';
-import { useTimerDispatch, TimerActionType } from './../../reducers';
-import { TimeType } from './../../entity'; // eslint-disable-line no-unused-vars
-import { zeroPad } from './../../util';
+import { TimeItem } from './TimeItem';
+import { TimeType } from './../../entity';
 
 type Props = {
   times: TimeType[];
@@ -9,42 +8,18 @@ type Props = {
 };
 
 export const TimeList = (props: Props) => {
-  const dispatch = useTimerDispatch();
-
-  const handleSelect = (index: number) => {
-    dispatch({
-      type: TimerActionType.Select,
-      payload: {
-        index: index,
-      },
-    });
-  };
-
-  const handleDelete = (index: number) => {
-    dispatch({
-      type: TimerActionType.Delete,
-      payload: {
-        index: index,
-      },
-    });
-  };
-
   return (
     <ul>
       {props.times.length === null ? (
         <></>
       ) : (
         props.times.map((x, i) => (
-          <li
+          <TimeItem
             key={i}
-            onClick={() => handleSelect(i)}
-            className={props.selectIndex === i ? 'selected' : ''}
-          >
-            <p>
-              {zeroPad(x.hour)}: {zeroPad(x.min)}: {zeroPad(x.sec)}
-            </p>
-            <button onClick={() => handleDelete(i)}>delete</button>
-          </li>
+            itemIndex={i}
+            time={x}
+            selectIndex={props.selectIndex}
+          />
         ))
       )}
     </ul>

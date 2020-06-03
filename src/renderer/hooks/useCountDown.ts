@@ -24,7 +24,6 @@ export function useCountDown(
     setInitialTime(time);
     setCurrentTime(time);
     refInitialTime.current = calcTime(time);
-    console.log(time);
   }, [time]);
 
   const resetDisplayTime = () => {
@@ -57,7 +56,7 @@ export function useCountDown(
   const setTimerInterval = () => {
     const id = window.setInterval(() => {
       if (refCountTime.current < 1) {
-        resetDisplayTime();
+        resetCountDown();
         setCountDownFlg('isWaiting');
         clearInterval(id);
         return false;
@@ -81,6 +80,7 @@ export function useCountDown(
   const resetCountDown = () => {
     clearInterval(intervalId);
     resetDisplayTime();
+    setPercent(100);
     setCountDownFlg('isWaiting');
   };
 
