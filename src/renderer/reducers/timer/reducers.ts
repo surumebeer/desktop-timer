@@ -2,6 +2,8 @@ import { TimeType } from '../../entity';
 import {
   TimerActionType,
   Actions,
+  AddWaitingAction,
+  DeleteWaitingAction,
   AddAction,
   DeleteAction,
   SelectAction,
@@ -10,6 +12,7 @@ import {
 
 export type State = {
   times: TimeType[];
+  waitingTimes: TimeType[];
   selectIndex: number;
 };
 
@@ -21,11 +24,22 @@ export const initialState: State = {
       sec: 10,
     },
   ],
+  waitingTimes: [
+    {
+      hour: 0,
+      min: 0,
+      sec: 10,
+    },
+  ],
   selectIndex: 0,
 };
 
 export const reducers = (state: State, action: Actions) => {
   switch (action.type) {
+    case TimerActionType.AddWaiting:
+      return addWaitingReducer(state, action.payload);
+    case TimerActionType.DeleteWaiting:
+      return deleteWaitingReducer(state, action.payload);
     case TimerActionType.Add:
       return addReducer(state, action.payload);
     case TimerActionType.Delete:
@@ -37,6 +51,29 @@ export const reducers = (state: State, action: Actions) => {
     default:
       return state;
   }
+};
+
+const addWaitingReducer = (
+  state: State,
+  payload: AddWaitingAction['payload']
+) => {
+  return {
+    ...state,
+    waitingTimes: [...state.waitingTimes, payload.time],
+  };
+};
+
+const deleteWaitingReducer = (
+  state: State,
+  payload: DeleteWaitingAction['payload']
+) => {
+  return {
+    ...state,
+    waitingTimes:
+      state.waitingTimes.length > 1
+        ? state.waitingTimes.filter((x, i) => i !== payload.selectIndex)
+        : initialState.waitingTimes,
+  };
 };
 
 const addReducer = (state: State, payload: AddAction['payload']) => {

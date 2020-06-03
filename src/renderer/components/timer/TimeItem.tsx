@@ -26,6 +26,15 @@ export const TimeItem = (props: Props) => {
     });
   };
 
+  const handleAdd = () => {
+    dispatch({
+      type: TimerActionType.AddWaiting,
+      payload: {
+        time: props.time,
+      },
+    });
+  };
+
   const handleDelete = () => {
     dispatch({
       type: TimerActionType.Delete,
@@ -74,6 +83,7 @@ export const TimeItem = (props: Props) => {
           {zeroPad(props.time.sec)}
         </p>
       )}
+      {isEdit ? <></> : <button onClick={handleAdd}>add</button>}
       <button onClick={handleDelete}>delete</button>
       {isEdit ? (
         <button onClick={handleUpdate}>update</button>

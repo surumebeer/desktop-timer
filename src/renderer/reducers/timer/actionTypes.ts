@@ -1,6 +1,8 @@
 import { TimeType } from './../../entity';
 
 export enum TimerActionType {
+  AddWaiting = 'ADD_WAITING_TIME',
+  DeleteWaiting = 'DELETE_WAITING_TIME',
   Add = 'ADD_TIME',
   Delete = 'DELETE_TIME',
   Update = 'UPDATE_TIME',
@@ -10,6 +12,16 @@ export enum TimerActionType {
 export type Payload = {
   time: TimeType;
   selectIndex: number;
+};
+
+export type AddWaitingAction = {
+  type: TimerActionType.AddWaiting;
+  payload: Pick<Payload, 'time'>;
+};
+
+export type DeleteWaitingAction = {
+  type: TimerActionType.DeleteWaiting;
+  payload: Pick<Payload, 'selectIndex'>;
 };
 
 export type AddAction = {
@@ -32,4 +44,10 @@ export type SelectAction = {
   payload: Pick<Payload, 'selectIndex'>;
 };
 
-export type Actions = AddAction | DeleteAction | UpdateAction | SelectAction;
+export type Actions =
+  | AddWaitingAction
+  | DeleteWaitingAction
+  | AddAction
+  | DeleteAction
+  | UpdateAction
+  | SelectAction;
