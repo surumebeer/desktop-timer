@@ -84,7 +84,11 @@ export const TimeItem = (props: Props) => {
         </p>
       )}
       {isEdit ? <></> : <button onClick={handleAdd}>add</button>}
-      <button onClick={handleDelete}>delete</button>
+      {props.itemIndex !== 0 ? (
+        <button onClick={handleDelete}>delete</button>
+      ) : (
+        <></>
+      )}
       {isEdit ? (
         <button onClick={handleUpdate}>update</button>
       ) : (

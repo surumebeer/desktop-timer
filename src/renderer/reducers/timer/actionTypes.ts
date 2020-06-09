@@ -1,6 +1,7 @@
 import { TimeType } from './../../entity';
 
 export enum TimerActionType {
+  ShiftWaiting = 'SHIFT_WAITING_TIME',
   AddWaiting = 'ADD_WAITING_TIME',
   DeleteWaiting = 'DELETE_WAITING_TIME',
   Add = 'ADD_TIME',
@@ -12,6 +13,10 @@ export enum TimerActionType {
 export type Payload = {
   time: TimeType;
   selectIndex: number;
+};
+
+export type ShiftWaitingAction = {
+  type: TimerActionType.ShiftWaiting;
 };
 
 export type AddWaitingAction = {
@@ -45,6 +50,7 @@ export type SelectAction = {
 };
 
 export type Actions =
+  | ShiftWaitingAction
   | AddWaitingAction
   | DeleteWaitingAction
   | AddAction

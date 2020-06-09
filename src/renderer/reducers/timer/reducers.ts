@@ -36,6 +36,8 @@ export const initialState: State = {
 
 export const reducers = (state: State, action: Actions) => {
   switch (action.type) {
+    case TimerActionType.ShiftWaiting:
+      return ShiftWaitingReducer(state);
     case TimerActionType.AddWaiting:
       return addWaitingReducer(state, action.payload);
     case TimerActionType.DeleteWaiting:
@@ -51,6 +53,16 @@ export const reducers = (state: State, action: Actions) => {
     default:
       return state;
   }
+};
+
+const ShiftWaitingReducer = (state: State) => {
+  return {
+    ...state,
+    waitingTimes:
+      state.waitingTimes.length > 0
+        ? state.waitingTimes.slice(0)
+        : state.waitingTimes,
+  };
 };
 
 const addWaitingReducer = (

@@ -23,7 +23,11 @@ export const TimeWaitingList = () => {
       {state.waitingTimes.map((x, i) => (
         <li key={i}>
           {x.hour}:{x.min}:{x.sec}
-          <button onClick={() => handleDelete(i)}>delete</button>
+          {i !== 0 ? (
+            <button onClick={() => handleDelete(i)}>delete</button>
+          ) : (
+            <></>
+          )}
         </li>
       ))}
     </ul>
